@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script defer src="index.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"
+      integrity="sha512-UNM1njAgOFUa74Z0bADwAq8gbTcqZC8Ej4xPSzpnh0l6KMevwvkBvbldF9uR++qKeJ+MOZHRjV1HZjoRvjDfNQ=="
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        #print-ini,
+        #print-ini * {
+          visibility: visible;
+        }
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body style="margin: 0">
+    <div class="parkingTicket">
+      <div
+        style="
+          text-align: center;
+          background-color: darkseagreen;
+          padding: 20px;
+          font-size: 40px;
+        "
+      >
+        PROGRAM KARTU PARKIR
+      </div>
+      <form onsubmit="getTicket(event)" name="parkirMasuk">
+        <table
+          style="
+            background-color: rgb(47, 116, 116);
+            margin-left: 250px;
+            margin-top: 30px;
+            padding: 20px;
+          "
+        >
+          <tr>
+            <td
+              colspan="2"
+              style="text-align: center; padding: 10px 18px; font-size: 28px"
+            >
+              Parkir Masuk
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="text"
+                name=""
+                placeholder="Plat No"
+                id="platNumberM"
+              />
+            </td>
+            <td>
+              <select
+                style="width: 80px"
+                name="jenis_kendaraan"
+                id="jenisKendaraanInpt"
+              >
+                <option value="Mobil">Mobil</option>
+                <option value="Motor">Motor</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="text" placeholder="Nomor Parkir" id="noParkir" />
+            </td>
+            <td>
+              <input
+                type="button"
+                value="Generate"
+                style="width: 80px"
+                onclick="generateCode()"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <input
+                type="submit"
+                value="Get Ticket"
+                style="background-color: coral"
+              />
+            </td>
+          </tr>
+        </table>
+      </form>
+
+      <form onsubmit="getPrice(event)" name="parkirKeluar">
+        <table
+          style="
+            background-color: rgb(47, 116, 116);
+            margin-top: 57px;
+            padding: 20px;
+            position: absolute;
+            right: 280px;
+            top: 58px;
+            padding-bottom: 50px;
+          "
+        >
+          <tr>
+            <td
+              colspan="2"
+              style="text-align: center; padding: 10px 18px; font-size: 28px"
+            >
+              Parkir Keluar
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="text"
+                name=""
+                placeholder="Plat No"
+                id="platNumberK"
+              />
+            </td>
+            <td>
+              <select
+                style="width: 80px"
+                name="jenis_kendaraan"
+                id="jenisKendaraanKeluar"
+              >
+                <option value="roda4">Mobil</option>
+                <option value="roda2">Motor</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <input
+                type="submit"
+                value="Get Price"
+                style="background-color: coral"
+              />
+            </td>
+          </tr>
+        </table>
+      </form>
+
+      <div id="print-ini">
+        <div
+          style="
+            background-color: darksalmon;
+            width: 450px;
+            position: absolute;
+            left: 380px;
+            margin-top: 40px;
+            padding: 10px;
+          "
+        >
+          <div style="text-align: center">KARTU PARKIR</div>
+          <div style="text-align: center">BEAUTY HOLLY MALL</div>
+        </div>
+
+        <div
+          style="
+            background-color: rgb(175, 166, 166);
+            width: 430px;
+            position: absolute;
+            left: 380px;
+            bottom: -20px;
+            margin-top: 100px;
+            height: 145px;
+            padding: 20px;
+          "
+        >
+          <table style="width: 450px" id="print-ini">
+            <tr>
+              <td>Jenis Kendaraan</td>
+              <td></td>
+              <td><input type="text" name="" id="jenisKendaraan" /></td>
+            </tr>
+            <tr>
+              <td>Nomor Parkir</td>
+              <td></td>
+              <td><input type="text" name="" id="nomorParkir" /></td>
+            </tr>
+            <tr>
+              <td>Waktu Masuk</td>
+              <td></td>
+              <td><input type="text" name="" id="waktuMasuk" /></td>
+            </tr>
+            <tr>
+              <td>Waktu Keluar</td>
+              <td></td>
+              <td><input type="text" name="" id="waktuKeluar" /></td>
+            </tr>
+            <tr>
+              <td>Tarif</td>
+              <td></td>
+              <td><input type="text" name="" id="tarif" /></td>
+            </tr>
+          </table>
+        </div>
+
+        <div
+          style="
+            background-color: darksalmon;
+            width: 450px;
+            position: absolute;
+            left: 380px;
+            margin-top: 280px;
+            padding: 10px;
+          "
+        >
+          <div style="text-align: center">
+            SIMPAN KARTU PARKIR ANDA, KEHILANGAN KARTU DIKENAKAN DENDA
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <button
+        class="btnPrint"
+        onclick="window.print()"
+        id="print"
+        style="
+          position: absolute;
+          left: 570px;
+          bottom: -140px;
+          width: 120px;
+          background-color: khaki;
+        "
+      >
+        <i class="fa fa-download"></i> Print
+      </button>
+    </div>
+    <div>
+      <button
+        class="btnData"
+        onclick="dataParkir()"
+        style="
+          position: absolute;
+          left: 560px;
+          bottom: -180px;
+          width: 140px;
+          background-color: rgb(116, 151, 92);
+        "
+      >
+        <span>Cek Data Parkir</span>
+      </button>
+    </div>
+
+    <div class="parkingDataTable hidden">
+      <div class="container">
+        <input
+          type="text"
+          id="mySearch"
+          placeholder="Cari Plat Nomor / Jenis Kendaraan"
+        />
+      </div>
+      <div class="container">
+        <table class="table data-parkir" type="listData">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Plat No</th>
+              <th scope="col">Jenis Kendaraan</th>
+              <th scope="col" style="text-align: center">Waktu Masuk</th>
+              <th scope="col" style="text-align: center">Waktu Keluar</th>
+              <th scope="col">Tarif Parkir</th>
+            </tr>
+          </thead>
+          <tbody id="parkingTable"></tbody>
+        </table>
+      </div>
+
+      <button class="button" onclick="dataParkir()">
+        <span>Beranda</span>
+      </button>
+    </div>
+  </body>
+</html>
